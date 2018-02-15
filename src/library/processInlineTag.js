@@ -8,12 +8,19 @@ const inlineTags = {
   sup: 'SUPERSCRIPT',
 };
 
+const inlineTagsByStyle = {
+  bold: 'BOLD',
+  700: 'BOLD',
+};
+
+
+
 export default function processInlineTag(
   tag: string,
   node: Object,
   currentStyle: Object
 ): Object {
-  const styleToCheck = inlineTags[tag];
+  const styleToCheck = inlineTags[tag] || inlineTagsByStyle[node.style['font-weight']];
   let inlineStyle;
   if (styleToCheck) {
     inlineStyle = currentStyle.add(styleToCheck).toOrderedSet();
