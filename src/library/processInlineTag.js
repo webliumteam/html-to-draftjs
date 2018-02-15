@@ -20,7 +20,7 @@ export default function processInlineTag(
   node: Object,
   currentStyle: Object
 ): Object {
-  const styleToCheck = inlineTags[tag] || inlineTagsByStyle[node.style['font-weight']];
+  const styleToCheck = inlineTags[tag] || inlineTagsByStyle[node.style && node.style['font-weight']];
   let inlineStyle;
   if (styleToCheck) {
     inlineStyle = currentStyle.add(styleToCheck).toOrderedSet();
