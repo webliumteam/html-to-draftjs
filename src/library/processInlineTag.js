@@ -3,7 +3,7 @@ const inlineTags = {
   del: 'STRIKETHROUGH',
   em: 'ITALIC',
   strong: 'BOLD',
-  ins: 'UNDERLINE',
+  u: 'UNDERLINE',
   sub: 'SUBSCRIPT',
   sup: 'SUPERSCRIPT',
 };
