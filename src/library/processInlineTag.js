@@ -2,25 +2,43 @@ const inlineTags = {
   code: 'CODE',
   del: 'STRIKETHROUGH',
   em: 'ITALIC',
-  strong: 'BOLD',
   u: 'UNDERLINE',
   sub: 'SUBSCRIPT',
   sup: 'SUPERSCRIPT',
 };
 
-const inlineTagsByStyle = {
-  bold: 'BOLD',
-  700: 'BOLD',
-};
+const inlineStylesMap = {
+  'font-weight': {
+    bold: 'BOLD',
+    700: 'BOLD',
+    normal: 'UNBOLD',
+    400: 'UNBOLD',
+  },
+  'text-decoration': {
+    none: 'UNUNDERLINE',
+  },
+  'font-style': {
+    normal: 'UNITALIC',
+  },
+}
 
+function getStyleByNodeStyle(node: Object): string {
+  let style
+  const key = node.style && node.style[0]
+  if (key) {
+    const value = node.style[key]
+    style = inlineStylesMap[key][value]
+  }
 
+  return style
+}
 
 export default function processInlineTag(
   tag: string,
   node: Object,
   currentStyle: Object
 ): Object {
-  const styleToCheck = inlineTags[tag] || inlineTagsByStyle[node.style && node.style['font-weight']];
+  const styleToCheck = inlineTags[tag] || getStyleByNodeStyle(node);
   let inlineStyle;
   if (styleToCheck) {
     inlineStyle = currentStyle.add(styleToCheck).toOrderedSet();
