@@ -14,9 +14,6 @@ const inlineStylesMap = {
     normal: 'UNBOLD',
     400: 'UNBOLD',
   },
-  'text-decoration': {
-    none: 'UNUNDERLINE',
-  },
   'font-style': {
     normal: 'UNITALIC',
   },
@@ -25,7 +22,7 @@ const inlineStylesMap = {
 function getStyleByNodeStyle(node: Object): string {
   let style
   const key = node.style && node.style[0]
-  if (key) {
+  if (key && inlineStylesMap[key]) {
     const value = node.style[key]
     style = inlineStylesMap[key][value]
   }
