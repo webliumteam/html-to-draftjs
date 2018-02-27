@@ -30,6 +30,11 @@ function genFragment(
   inEntity: number
 ): Object {
   const nodeName = node.nodeName.toLowerCase();
+  const firstStyleKey = node.style ? node.style[0] : null
+  let style = ''
+  if (firstStyleKey) {
+    style = `${firstStyleKey}-${node.style[firstStyleKey]}`
+  }
 
   if (nodeName === '#text' && node.textContent !== '\n') {
     return createTextChunk(node, inlineStyle, inEntity);
@@ -75,7 +80,7 @@ function genFragment(
     return { chunk: getAtomicBlockChunk(entityId) };
   }
 
-  const blockType = getBlockTypeForTag(nodeName, lastList);
+  const blockType = getBlockTypeForTag(nodeName, lastList, style);
 
   let chunk;
   if (blockType) {

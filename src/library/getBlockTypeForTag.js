@@ -37,19 +37,20 @@ const blockRenderMap = new Map({
     element: 'figure',
   },
   unstyled: {
-    element: 'p',
+    element: 'display-block',
     aliasedElements: ['div']
   },
 });
 
 export default function getBlockTypeForTag(
   tag: string,
-  lastList: ?string
+  lastList: ?string,
+  style: ?object
 ): Object {
   const matchedTypes = blockRenderMap
     .filter(draftBlock => {
       return (
-      (draftBlock.element === tag &&
+      ((draftBlock.element === tag || draftBlock.element === style) &&
       (!draftBlock.wrapper || draftBlock.wrapper === lastList)) ||
       draftBlock.wrapper === tag ||
       (draftBlock.aliasedElements && draftBlock.aliasedElements.indexOf(tag) > -1)
