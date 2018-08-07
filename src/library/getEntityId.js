@@ -10,7 +10,9 @@ export const ACTION_PATH_MAP = {
   link: 'pageId',
 }
 
-const getHref = node => node.getAttribute ? node.getAttribute('href') || node.href : node.href
+const getAttr = (node, attrName) => node.getAttribute
+  ? node.getAttribute(attrName) || node[attrName]
+  : node[attrName]
 
 const getLinkConfig = {
   external: node => ({
@@ -18,13 +20,14 @@ const getLinkConfig = {
     action: 'external',
     actions: {
       external: {
-        url: getHref(node),
+        url: getAttr(node, 'href'),
         target: node.target,
+        noFollow: Boolean(getAttr(node, 'rel'))
       },
     }
   }),
   email: node => {
-    const [, email, subject] = getHref(node).match(/^mailto:([^?]+)(?:\?subject=(.*)|.*)?$/) || []
+    const [, email, subject] = getAttr(node, 'href').match(/^mailto:([^?]+)(?:\?subject=(.*)|.*)?$/) || []
     return {
       title: node.innerHTML,
       action: 'email',
@@ -34,7 +37,7 @@ const getLinkConfig = {
     }
   },
   phone: node => {
-    const [, url] = getHref(node).match(/^tel:(.*)$/) || []
+    const [, url] = getAttr(node, 'href').match(/^tel:(.*)$/) || []
     return {
       title: node.innerHTML,
       action: 'phone',
