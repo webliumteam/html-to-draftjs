@@ -41,7 +41,8 @@ function genFragment(
   }
 
   if (nodeName === 'br') {
-    return { chunk: getSoftNewlineChunk() };
+    // return { chunk: getSoftNewlineChunk() };
+    return { chunk: getBlockDividerChunk('unstyled', depth, getBlockData(node)) };
   }
 
   if (
