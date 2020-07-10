@@ -22,7 +22,7 @@ const getLinkConfig = {
       external: {
         url: getAttr(node, 'href'),
         target: node.target,
-        noFollow: getAttr(node, 'rel') && getAttr(node, 'rel').includes('nofollow'),
+        noFollow: Boolean(getAttr(node, 'rel')) && getAttr(node, 'rel').includes('nofollow'),
       },
     }
   }),
